@@ -1,0 +1,17 @@
+name: proxyfun
+
+services:
+  squid:
+    image: ubuntu/squid:latest
+    restart: unless-stopped
+    ports:
+      - "${PROXY_BIND_IP:?Set PROXY_BIND_IP in .env}:${PROXY_PORT:-43128}:3128"
+    volumes:
+      - ./squid.conf:/etc/squid/squid.conf:ro
+      - ./access-lan.conf:/etc/squid/access.conf:ro
+      - ./auth:/etc/squid/auth:ro
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

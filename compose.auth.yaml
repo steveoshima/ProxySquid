@@ -1,0 +1,4 @@
+services:
+  squid:
+    volumes:
+      - ./access-auth.conf:/etc/squid/access.conf:ro
