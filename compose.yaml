@@ -10,6 +10,7 @@ services:
       - ./squid.conf:/etc/squid/squid.conf:ro
       - ./access-lan.conf:/etc/squid/access.conf:ro
       - ./auth:/etc/squid/auth:ro
+      - ./throttle:/etc/squid/throttle:ro
     logging:
       driver: json-file
       options:

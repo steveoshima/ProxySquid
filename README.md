@@ -96,3 +96,31 @@ bash proxy.sh update
 
 Then recreate in the desired mode as described above. Pulling alone does not
 replace the running container or change its authentication mode.
+
+## Simulate slow cellular downloads
+
+Enable a shared download bandwidth cap, in decimal **kilobits per second**:
+
+```sh
+bash throttle.sh enable 128
+bash throttle.sh enable 256
+bash throttle.sh status
+bash throttle.sh disable
+```
+
+128 kbps is approximately 16 KB/s; 256 kbps is approximately 32 KB/s.
+The argument must be an integer from 8 to 1000000. The bandwidth is shared
+across all clients/connections, not applied separately to each PC.
+
+This uses Squid delay pools for HTTP downloads and HTTPS CONNECT downloads.
+It does not decrypt HTTPS or limit uploads, and does not simulate latency,
+jitter, packet loss, or cellular disconnections. A one-second token bucket
+allows short bursts; protocol overhead can reduce application download speed.
+
+Enable/disable validates and reloads the running Squid configuration without
+changing authentication mode. Reconnect clients/close existing browser
+connections for a clean test: existing tunnels may retain their previous limit.
+The saved setting in [throttle/limits.conf](throttle/limits.conf) persists across
+container restarts and both authentication modes. The proxy must be running
+to enable or disable throttling; `status` displays the saved configuration.
+Throttling is initially disabled.

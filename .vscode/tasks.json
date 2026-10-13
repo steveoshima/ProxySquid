@@ -1,0 +1,16 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Start Squid proxy (no auth)",
+			"type": "shell",
+			"command": "bash",
+			"args": [
+				"proxy.sh",
+				"start"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		}
+	]
+}
